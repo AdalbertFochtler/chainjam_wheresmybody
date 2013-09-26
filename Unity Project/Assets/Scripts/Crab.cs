@@ -54,16 +54,32 @@ public class Crab : MonoBehaviour {
 			}
 			
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.LEFT))
-				transform.Translate(Vector3.left * speed);
+			{
+				if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
+					transform.Rotate(new Vector3(0,0,-1f));
+				else
+					transform.Rotate(new Vector3(0,0,1f));
+				//transform.Translate(Vector3.left * speed);
+			}
 				
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.RIGHT))
-				transform.Translate(Vector3.right * speed);
+			{
+				if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
+					transform.Rotate(new Vector3(0,0,1f));
+				else
+					transform.Rotate(new Vector3(0,0,-1f));
+				//transform.Translate(Vector3.right * speed);
+			}
 			
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
-				transform.Translate(Vector3.down * speed);
+			{
+				transform.Translate(Vector3.left * speed);
+			}
 			
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.UP))
-				transform.Translate(Vector3.up * speed);
+			{
+				transform.Translate(Vector3.right * speed);
+			}
 		}
 	}
 	
@@ -93,10 +109,10 @@ public class Crab : MonoBehaviour {
 				{
 					enemy.isDead = true;
 					enemy.gameObject.SetActive(false);
+					ChainJam.AddPoints(playerID, 1);
 				}
-			}
+			}		
 			
-			ChainJam.AddPoints(playerID, 1);
 		}
 	}
 	
