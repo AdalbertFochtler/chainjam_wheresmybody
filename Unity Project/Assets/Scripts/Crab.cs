@@ -16,71 +16,67 @@ public class Crab : MonoBehaviour {
 	
 	public bool isDead; 				// whether the crab is dead
 	
+	public float attackThreshold;		// max. distance for attack
+	
+	int x;
+	
 	void Start () {
 		isDead = false;
 		foreach(LegSlot slot in legSlots)
 			slot.leg.SetActive(true);
 		claws.SetActive(true);
+		
+		x=0;
 	}
 	
 	void Update () {
 		if(!isDead)
 		{
-			// left attack
-			if(ChainJam.GetButtonJustPressed(playerID, ChainJam.BUTTON.A))
+			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.A))
 			{
-				foreach(GameObject go in GameObject.FindGameObjectsWithTag("crab"))
-				{
-					Crab enemy = go.GetComponent<Crab>();
-					if(enemy != this && leftPoint.collider)
-					{
-						Attack(enemy, true);
-						break;
-					}
-				}
+				transform.Rotate(new Vector3(0,0,-1f));
 			}
-			// right attack
-			if(ChainJam.GetButtonJustPressed(playerID, ChainJam.BUTTON.B))
+			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.B))
 			{
-				foreach(GameObject go in GameObject.FindGameObjectsWithTag("crab"))
-				{
-					Crab enemy = go.GetComponent<Crab>();
-					if(enemy != this && leftPoint.collider)
-					{
-						Attack(enemy, false);
-						break;
-					}
-				}
+				transform.Rotate(new Vector3(0,0,1f));
 			}
 			
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.LEFT))
 			{
-				if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
-					transform.Rotate(new Vector3(0,0,-1f));
-				else
-					transform.Rotate(new Vector3(0,0,1f));
-				//transform.Translate(Vector3.left * speed);
+				transform.Translate(Vector3.right * speed);
 			}
 				
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.RIGHT))
 			{
-				if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
-					transform.Rotate(new Vector3(0,0,1f));
-				else
-					transform.Rotate(new Vector3(0,0,-1f));
-				//transform.Translate(Vector3.right * speed);
+				transform.Translate(Vector3.left * speed);
 			}
 			
 			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.DOWN))
 			{
-				transform.Translate(Vector3.left * speed);
+				;
 			}
 			
-			if(ChainJam.GetButtonPressed(playerID, ChainJam.BUTTON.UP))
+			if(ChainJam.GetButtonJustPressed(playerID, ChainJam.BUTTON.UP))
 			{
-				transform.Translate(Vector3.right * speed);
+				foreach(GameObject go in GameObject.FindGameObjectsWithTag("crab"))
+				{
+					Crab enemy = go.GetComponent<Crab>();
+					if(CanAttack(enemy))
+					{
+						Attack(enemy);
+						Debug.Log ("KILL " + x.ToString());
+						x++;
+						break;
+					}
+				}
 			}
 		}
+	}
+	
+	private bool CanAttack(Crab enemy)
+	{
+		return (enemy != this 
+			&& Vector3.Distance(transform.position, enemy.transform.position)<attackThreshold);
 	}
 	
 	/**
@@ -89,7 +85,7 @@ public class Crab : MonoBehaviour {
 	 * otherwise, if possible, remove the claws.
 	 * otherwise, kill.
 	 */
-	public void Attack(Crab enemy, bool left)
+	public void Attack(Crab enemy)
 	{
 		// TODO: enemy has to be close to me
 		if(claws.activeSelf && !enemy.isDead)
