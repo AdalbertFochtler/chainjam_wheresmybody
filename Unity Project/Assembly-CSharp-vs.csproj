@@ -46,16 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Chain Jam\Plugins\iTween.cs" />
      <Compile Include="Assets\Chain Jam\Scripts\ChainJam.cs" />
-     <Compile Include="Assets\Chain Jam\Scripts\Crab.cs" />
-     <Compile Include="Assets\Scripts\BlockScripts\Lava.cs" />
-     <Compile Include="Assets\Scripts\BlockScripts\Move.cs" />
-     <Compile Include="Assets\Scripts\BlockScripts\Scale.cs" />
-     <Compile Include="Assets\Scripts\BlockScripts\Spin.cs" />
-     <Compile Include="Assets\Scripts\BlockScripts\Trampoline.cs" />
-     <Compile Include="Assets\Scripts\Game\SoundManager.cs" />
-     <Compile Include="Assets\Scripts\Game\SpawnPoint.cs" />
-     <Compile Include="Assets\Scripts\Player\Player.cs" />
-     <Compile Include="Assets\Scripts\Player\Squish.cs" />
+     <Compile Include="Assets\Scripts\Algorithms.cs" />
+     <Compile Include="Assets\Scripts\Crab.cs" />
+     <Compile Include="Assets\Scripts\LegSlot.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
